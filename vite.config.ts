@@ -7,40 +7,22 @@ import tailwindcss from 'tailwindcss'
 import { defineConfig } from 'vite'
 
 export default defineConfig({
-  /**
-   * Define vite plugins
-   */
+  /** Define vite plugins */
   plugins: [
     inertia({ ssr: { enabled: true, entrypoint: 'inertia/app/ssr.tsx' } }),
     react(),
     adonisjs({ entrypoints: ['inertia/app/app.tsx'], reload: ['resources/views/**/*.edge'] }),
   ],
 
-  /**
-   * Define the postcss configuration
-   */
-  css: {
-    postcss: {
-      plugins: [tailwindcss, autoprefixer],
-    },
-  },
+  /** Define postcss plugins for processing */
+  css: { postcss: { plugins: [tailwindcss, autoprefixer] } },
 
-  /**
-   * Define the compilation target
-   */
-  optimizeDeps: {
-    esbuildOptions: {
-      target: 'esnext',
-    },
-  },
+  /** Define the build options */
+  optimizeDeps: { esbuildOptions: { target: 'esnext' } },
 
   /**
    * Define aliases for importing modules from
    * your frontend code
    */
-  resolve: {
-    alias: {
-      '~/': `${getDirname(import.meta.url)}/inertia/`,
-    },
-  },
+  resolve: { alias: { '~/': `${getDirname(import.meta.url)}/inertia/` } },
 })
