@@ -14,7 +14,11 @@ export default class IndexSeeder extends BaseSeeder {
     //   return
     // }
 
-    await new Seeder.default(this.client).run()
+    try {
+      await new Seeder.default(this.client).run()
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   async run() {
@@ -27,6 +31,7 @@ export default class IndexSeeder extends BaseSeeder {
     await this.seed(await import('#database/seeders/item_tier_seeder'))
     await this.seed(await import('#database/seeders/item_category_seeder'))
     await this.seed(await import('#database/seeders/item_seeder'))
+    await this.seed(await import('#database/seeders/items_mobs_seeder'))
 
     /** Weapon Seeders */
     await this.seed(await import('#database/seeders/weapon_seeder'))
@@ -34,5 +39,6 @@ export default class IndexSeeder extends BaseSeeder {
 
     /** Build Seeders */
     await this.seed(await import('#database/seeders/build_seeder'))
+    await this.seed(await import('#database/seeders/builds_items_seeder'))
   }
 }

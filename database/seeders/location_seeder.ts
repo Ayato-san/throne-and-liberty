@@ -77,6 +77,13 @@ export default class extends BaseSeeder {
       { name: 'Temple of Sylaveth', categoryId: await findId('Dungeon') },
       { name: 'Saurodoma Island', categoryId: await findId('Dungeon') },
       { name: 'Sanctum of Desire', categoryId: await findId('Dungeon') },
+      { name: 'Ruins of Turayne', categoryId: await findId('Field Boss') },
+      { name: 'Monolith Wastelands', categoryId: await findId('Field Boss') },
+      { name: 'Purelight Hill', categoryId: await findId('Field Boss') },
+      { name: 'Manawastes', categoryId: await findId('Field Boss') },
+      { name: 'The Raging Wilds', categoryId: await findId('Field Boss') },
+      { name: 'Tevent Temple', categoryId: await findId('Arch Boss') },
+      { name: "Queen's Trap", categoryId: await findId('Arch Boss') },
     ])
   }
 }

@@ -1,8 +1,9 @@
 import { Opaque } from '@adonisjs/core/types/helpers'
-import { BaseModel, belongsTo, column } from '@adonisjs/lucid/orm'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import { BaseModel, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
+import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
 
+import Item from './item.js'
 import Location, { type LocationId } from './location.js'
 
 /** The opaque type for the mob id */
@@ -37,6 +38,12 @@ export default class Mob extends BaseModel {
   /** The location of the mob */
   @belongsTo(() => Location)
   declare location: BelongsTo<typeof Location>
+
+  /** The items that the mob drops */
+  @manyToMany(() => Item, {
+    pivotColumns: ['drop_chance'],
+  })
+  declare items: ManyToMany<typeof Item>
 
   /** The date and time the record was created */
   @column.dateTime({ autoCreate: true })

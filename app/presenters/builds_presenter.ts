@@ -37,28 +37,16 @@ export default class BuildsPresenter {
     this.weapons = weapons?.filter((weapon) => weapon !== null)
   }
 
-  static async fromPromise(promise: Promise<PlayerBuild[]>): Promise<BuildsPresenter[]> {
-    const builds = await promise
-    return BuildsPresenter.fromArray(builds)
-  }
-
-  /** The method to create a player build presenter from a player build model */
-  static fromModel(build: PlayerBuild) {
-    return new BuildsPresenter({
-      id: build.id,
-      scale: build.scale,
-      type: build.type,
-      className: build.class?.name,
-      weapons: [build.class?.primary?.name, build.class?.secondary?.name],
-    })
-  }
-
   /** The method to create an array of player build presenters from an array of player build models */
   static fromArray(builds: PlayerBuild[]) {
-    const buildPresenters = []
-    for (const build of builds) {
-      buildPresenters.push(BuildsPresenter.fromModel(build))
-    }
-    return buildPresenters
+    return builds.map((build) => {
+      return new BuildsPresenter({
+        id: build.id,
+        scale: build.scale,
+        type: build.type,
+        className: build.class?.name,
+        weapons: [build.class?.primary?.name, build.class?.secondary?.name],
+      })
+    })
   }
 }

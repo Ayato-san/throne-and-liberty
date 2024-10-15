@@ -1,11 +1,17 @@
 import type PlayerBuild from '#models/player_build'
 
-interface Item {
+type Base = {
   name: string
 }
 
+type Item = Base & {}
+
+type Mob = Base & {}
+
+type Location = Base & {}
+
 /** The presenter for the player builds */
-export default class BuildsPresenter {
+export default class BuildPresenter {
   /** The id of the player build */
   id: string
   /** The scale of the player build */
@@ -17,6 +23,8 @@ export default class BuildsPresenter {
   /** The weapons of the player build */
   weapons?: string[]
   items: Item[]
+  mobs: Mob[]
+  locations: Location[]
 
   /**
    * The constructor for the player builds presenter
@@ -29,6 +37,8 @@ export default class BuildsPresenter {
     className,
     weapons,
     items,
+    mobs,
+    locations,
   }: {
     id: string
     scale: string | null
@@ -36,6 +46,8 @@ export default class BuildsPresenter {
     className?: string
     weapons?: string[]
     items: Item[]
+    mobs: Mob[]
+    locations: Location[]
   }) {
     this.id = id
     this.scale = scale
@@ -43,32 +55,36 @@ export default class BuildsPresenter {
     this.items = items
     this.class = className
     this.weapons = weapons?.filter((weapon) => weapon !== null)
-  }
-
-  static async fromPromise(promise: Promise<PlayerBuild[]>): Promise<BuildsPresenter[]> {
-    const builds = await promise
-    return BuildsPresenter.fromArray(builds)
+    this.mobs = mobs
+    this.locations = locations
   }
 
   /** The method to create a player build presenter from a player build model */
   static fromModel(build: PlayerBuild) {
-    return new BuildsPresenter({
+    const locations = build.items
+      .map((item) =>
+        item.mobs.map((mob) => {
+          return { name: mob.location.name }
+        })
+      )
+      .flat()
+
+    return new BuildPresenter({
       id: build.id,
       scale: build.scale,
       type: build.type,
       className: build.class?.name,
       weapons: [build.class?.primary?.name, build.class?.secondary?.name],
       items: build.items.map((item) => ItemPresenter(item)),
+      mobs: build.items
+        .map((item) =>
+          item.mobs.map((mob) => {
+            return { name: mob.name }
+          })
+        )
+        .flat(),
+      locations: [...new Map(locations.map((item) => [item.name, item])).values()],
     })
-  }
-
-  /** The method to create an array of player build presenters from an array of player build models */
-  static fromArray(builds: PlayerBuild[]) {
-    const buildPresenters = []
-    for (const build of builds) {
-      buildPresenters.push(BuildsPresenter.fromModel(build))
-    }
-    return buildPresenters
   }
 }
 

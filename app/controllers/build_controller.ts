@@ -1,23 +1,17 @@
+import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
 import type { PlayerBuildId } from '#models/player_build'
-import PlayerBuild from '#models/player_build'
-import BuildPresenter from '../presenters/build_presenter.js'
+import BuildsRepository from '../repositories/builds_repository.js'
 
+@inject()
 export default class BuildController {
+  constructor(private repository: BuildsRepository) {}
+
   async handle({ inertia, params }: HttpContext) {
     const id: PlayerBuildId = params.id
+    const build = await this.repository.find(id)
 
-    const build = await PlayerBuild.query()
-      .preload('items')
-      .preload('class', (classQuery) => {
-        classQuery.preload('primary').preload('secondary')
-      })
-      .where('id', id)
-      .firstOrFail()
-
-    const buildPresenter = BuildPresenter.fromModel(build)
-
-    return inertia.render('builds/unique', { build: buildPresenter })
+    return inertia.render('builds/unique', { build })
   }
 }

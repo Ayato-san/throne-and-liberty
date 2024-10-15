@@ -5,6 +5,7 @@ import { DateTime } from 'luxon'
 
 import ItemCategory, { type ItemCategoryId } from './item_category.js'
 import ItemTier, { type ItemTierId } from './item_tier.js'
+import Mob from './mob.js'
 import PlayerBuild from './player_build.js'
 
 /** The opaque type for the item id */
@@ -39,6 +40,12 @@ export default class Item extends BaseModel {
   /** The player builds that the item belongs to */
   @manyToMany(() => PlayerBuild)
   declare builds: ManyToMany<typeof PlayerBuild>
+
+  /** The mobs that the item belongs */
+  @manyToMany(() => Mob, {
+    pivotColumns: ['drop_chance'],
+  })
+  declare mobs: ManyToMany<typeof Mob>
 
   /** The date and time the record was created */
   @column.dateTime({ autoCreate: true })

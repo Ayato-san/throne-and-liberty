@@ -3,18 +3,11 @@ import { Link } from '~/components/elements/link'
 import { useEffect, useState } from 'react'
 
 import type BuildListsController from '#controllers/build_lists_controller'
+import type BuildsPresenter from '../../../app/presenters/builds_presenter'
 
 type ListProps = InferPageProps<BuildListsController, 'handle'>
 
-interface Build {
-  id: string
-  class?: string
-  scale: string | null
-  type: string
-  weapons?: string[]
-}
-
-function BuildName(build: Build) {
+function BuildName(build: BuildsPresenter) {
   const [name, setName] = useState('')
 
   useEffect(() => {
