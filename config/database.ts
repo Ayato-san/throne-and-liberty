@@ -1,5 +1,6 @@
-import env from '#start/env'
 import { defineConfig } from '@adonisjs/lucid'
+
+import env from '#start/env'
 
 const dbConfig = defineConfig({
   connection: 'postgres',
@@ -16,6 +17,9 @@ const dbConfig = defineConfig({
       migrations: {
         naturalSort: true,
         paths: ['database/migrations'],
+      },
+      seeders: {
+        paths: ['./database/seeders/main'],
       },
     },
   },

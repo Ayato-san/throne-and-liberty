@@ -10,7 +10,13 @@ import { AppShell } from '~/components/layouts/app_shell'
 import { hydrateRoot } from 'react-dom/client'
 
 /** The application name */
-const appName = import.meta.env.VITE_APP_NAME || 'ShikigamiStudio'
+const appName: string = import.meta.env.VITE_APP_NAME || 'ShikigamiStudio'
+
+export type Page = any
+// export type Page = {
+//   default: React.ComponentType<any> & { layout?: React.ComponentType<any> }
+//   [key: string]: any
+// }
 
 /** Create Inertia.js app instance */
 createInertiaApp({
@@ -23,9 +29,9 @@ createInertiaApp({
   /** Resolve page components dynamically */
   resolve: async (name) => {
     /** Step 1: Load the page component dynamically */
-    const page: any = await resolvePageComponent(
+    const page = await resolvePageComponent(
       `../pages/${name}.tsx`, // Path to the page component
-      import.meta.glob('../pages/**/*.tsx') // Glob pattern to match page components
+      import.meta.glob<Page>('../pages/**/*.tsx') // Glob pattern to match page components
     )
 
     /** Step 2: Set default layout if not specified in the page component */

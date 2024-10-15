@@ -1,4 +1,5 @@
 import { Head } from '@inertiajs/react'
+import { Link } from '~/components/elements/link'
 
 export default function Home() {
   return (
@@ -34,6 +35,7 @@ export default function Home() {
         </defs>
       </svg>
       <h1>Homepage</h1>
+      <Link href="/builds">Builds</Link>
     </>
   )
 }
