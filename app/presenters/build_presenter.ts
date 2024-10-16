@@ -1,4 +1,5 @@
 import type PlayerBuild from '#models/player_build'
+import type { PublicOnly } from '#types/utils'
 
 type Base = {
   name: string
@@ -22,8 +23,11 @@ export default class BuildPresenter {
   class?: string
   /** The weapons of the player build */
   weapons?: string[]
+  /** The items of the player build */
   items: Item[]
+  /** The mobs of the player build */
   mobs: Mob[]
+  /** The locations of the player build */
   locations: Location[]
 
   /**
@@ -39,16 +43,7 @@ export default class BuildPresenter {
     items,
     mobs,
     locations,
-  }: {
-    id: string
-    scale: string | null
-    type: string
-    className?: string
-    weapons?: string[]
-    items: Item[]
-    mobs: Mob[]
-    locations: Location[]
-  }) {
+  }: Omit<PublicOnly<BuildPresenter>, 'class'> & { className: BuildPresenter['class'] }) {
     this.id = id
     this.scale = scale
     this.type = type

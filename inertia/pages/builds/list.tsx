@@ -34,10 +34,14 @@ export default function List(props: ListProps) {
   const { builds } = props
 
   return (
-    <ul>
-      {builds.map((build) => (
-        <BuildName key={build.id} {...build} />
-      ))}
-    </ul>
+    <div>
+      <Link href="/builds/add">Add Build</Link>
+      <h1>Builds</h1>
+      <ul>
+        {builds.map((build) => (
+          <BuildName key={build.id} {...build} />
+        ))}
+      </ul>
+    </div>
   )
 }

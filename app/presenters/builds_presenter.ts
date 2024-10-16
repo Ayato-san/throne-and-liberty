@@ -1,4 +1,5 @@
 import type PlayerBuild from '#models/player_build'
+import type { PublicOnly } from '#types/utils'
 
 /** The presenter for the player builds */
 export default class BuildsPresenter {
@@ -23,13 +24,7 @@ export default class BuildsPresenter {
     type,
     className,
     weapons,
-  }: {
-    id: string
-    scale: string | null
-    type: string
-    className?: string
-    weapons?: string[]
-  }) {
+  }: Omit<PublicOnly<BuildsPresenter>, 'class'> & { className: BuildsPresenter['class'] }) {
     this.id = id
     this.scale = scale
     this.type = type

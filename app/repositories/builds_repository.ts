@@ -52,4 +52,10 @@ export default class BuildsRepository {
 
     return BuildPresenter.fromModel(build)
   }
+
+  // async create(data: any) {}
+
+  // async update(id: string, data: any) {}
+
+  // async delete(id: string) {}
 }

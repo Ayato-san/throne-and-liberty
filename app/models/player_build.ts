@@ -44,4 +44,5 @@ export default class PlayerBuild extends BaseModel {
   /** The date and time the record was last updated */
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+  static scales: any
 }
