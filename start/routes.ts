@@ -20,4 +20,5 @@ const uuidRegex = /^[a-zA-Z0-9]{8}-([a-zA-Z0-9]{4}-){3}[a-zA-Z0-9]{12}$/
 
 router.get('/builds', [BuildListsController, 'handle'])
 router.get('/builds/add', [BuildAddController, 'handle'])
+router.post('/builds/add', [BuildAddController, 'execute'])
 router.get('/builds/:id', [BuildController, 'handle']).where('id', uuidRegex)

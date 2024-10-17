@@ -34,7 +34,9 @@ export default class BuildsRepository {
     return BuildPresenter.fromModel(build)
   }
 
-  // async create(data: any) {}
+  async create(data: any) {
+    console.log(data)
+  }
 
   // async update(id: string, data: any) {}
 
