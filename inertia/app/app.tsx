@@ -10,7 +10,7 @@ import { AppShell } from '~/components/layouts/app_shell'
 import { hydrateRoot } from 'react-dom/client'
 
 /** The application name */
-const appName: string = import.meta.env.VITE_APP_NAME || 'ShikigamiStudio'
+const appName: string = import.meta.env.VITE_APP_NAME || 'Throne and Liberty'
 
 export type Page = any
 // export type Page = {

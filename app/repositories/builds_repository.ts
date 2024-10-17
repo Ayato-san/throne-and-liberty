@@ -8,19 +8,15 @@ export default class BuildsRepository {
    */
   async all() {
     const builds = await PlayerBuild.query()
+      .select(
+        'player_builds.id',
+        'player_builds.scale',
+        'player_builds.type',
+        'player_builds.association_id'
+      )
       .join('weapon_associations', 'player_builds.association_id', 'weapon_associations.id')
-      .select('player_builds.*')
+      .withScopes((query) => query.class())
       .orderBy('weapon_associations.name')
-      .preload('class', (classQuery) => {
-        classQuery
-          .select('name', 'primaryId', 'secondaryId')
-          .preload('primary', (primaryQuery) => {
-            primaryQuery.select('name')
-          })
-          .preload('secondary', (secondaryQuery) => {
-            secondaryQuery.select('name')
-          })
-      })
 
     return BuildsPresenter.fromArray(builds)
   }
@@ -30,23 +26,8 @@ export default class BuildsRepository {
    */
   async find(id: string) {
     const build = await PlayerBuild.query()
-      .preload('items', (itemQuery) => {
-        itemQuery.preload('mobs', (mobQuery) => {
-          mobQuery.select('name', 'locationId', 'details').preload('location', (locationQuery) => {
-            locationQuery.select('name')
-          })
-        })
-      })
-      .preload('class', (classQuery) => {
-        classQuery
-          .select('name', 'primaryId', 'secondaryId')
-          .preload('primary', (primaryQuery) => {
-            primaryQuery.select('name')
-          })
-          .preload('secondary', (secondaryQuery) => {
-            secondaryQuery.select('name')
-          })
-      })
+      .withScopes((query) => query.stuff(true))
+      .withScopes((query) => query.class())
       .where('id', id)
       .firstOrFail()
 

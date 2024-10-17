@@ -1,6 +1,7 @@
 import { Opaque } from '@adonisjs/core/types/helpers'
-import { BaseModel, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
-import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
+import { BaseModel, belongsTo, column, hasMany, manyToMany, scope } from '@adonisjs/lucid/orm'
+import { QueryScopeCallback } from '@adonisjs/lucid/types/model'
+import type { BelongsTo, HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
 
 import ItemCategory, { type ItemCategoryId } from './item_category.js'
@@ -21,6 +22,10 @@ export default class Item extends BaseModel {
   @column()
   declare name: string
 
+  /** The image of the item */
+  @column()
+  declare image: string
+
   /** The category id that the item belongs to */
   @column()
   declare categoryId: ItemCategoryId
@@ -37,15 +42,15 @@ export default class Item extends BaseModel {
   @belongsTo(() => ItemTier)
   declare tier: BelongsTo<typeof ItemTier>
 
-  /** The player builds that the item belongs to */
-  @manyToMany(() => PlayerBuild)
-  declare builds: ManyToMany<typeof PlayerBuild>
-
   /** The mobs that the item belongs */
   @manyToMany(() => Mob, {
     pivotColumns: ['drop_chance'],
   })
   declare mobs: ManyToMany<typeof Mob>
+
+  /** The builds that the item belongs */
+  @hasMany(() => PlayerBuild)
+  declare builds: HasMany<typeof PlayerBuild>
 
   /** The date and time the record was created */
   @column.dateTime({ autoCreate: true })
@@ -54,4 +59,13 @@ export default class Item extends BaseModel {
   /** The date and time the record was last updated */
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  /** The scope to preload the location name and mob name */
+  static locationName = scope<typeof Item, QueryScopeCallback<typeof Item>>((query) => {
+    query.preload('mobs', (mobQuery) => {
+      mobQuery.select('name', 'locationId', 'details').preload('location', (locationQuery) => {
+        locationQuery.withScopes((query) => query.nameCategory())
+      })
+    })
+  })
 }

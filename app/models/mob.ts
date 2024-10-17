@@ -33,7 +33,7 @@ export default class Mob extends BaseModel {
 
   /** The location of the mob */
   @column()
-  declare locationId: LocationId
+  declare locationId: LocationId | null
 
   /** The location of the mob */
   @belongsTo(() => Location)

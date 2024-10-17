@@ -39,6 +39,5 @@ export default class IndexSeeder extends BaseSeeder {
 
     /** Build Seeders */
     await this.seed(await import('#database/seeders/build_seeder'))
-    await this.seed(await import('#database/seeders/builds_items_seeder'))
   }
 }

@@ -10,7 +10,7 @@ export default class extends BaseSchema {
       table.integer('max_level').nullable()
       table.string('link').nullable()
       table.string('details').nullable()
-      table.uuid('location_id').notNullable().references('locations.id').onDelete('CASCADE') // Delete all mobs in a location if the location is deleted
+      table.uuid('location_id').nullable().references('locations.id').onDelete('CASCADE') // Delete all mobs in a location if the location is deleted
 
       table.timestamp('created_at').notNullable()
       table.timestamp('updated_at').nullable()

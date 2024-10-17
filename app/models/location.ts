@@ -1,5 +1,6 @@
 import { Opaque } from '@adonisjs/core/types/helpers'
-import { BaseModel, belongsTo, column, hasMany } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, hasMany, scope } from '@adonisjs/lucid/orm'
+import { QueryScopeCallback } from '@adonisjs/lucid/types/model'
 import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
 
@@ -21,12 +22,10 @@ export default class Location extends BaseModel {
   declare categoryId: LocationCategoryId
 
   /** The category that the location belongs to */
-  @belongsTo(() => LocationCategory)
+  @belongsTo(() => LocationCategory, {
+    foreignKey: 'categoryId',
+  })
   declare category: BelongsTo<typeof LocationCategory>
-
-  /** The name of the location */
-  @hasMany(() => Location)
-  declare location: HasMany<typeof Location>
 
   /** The name of the location */
   @column()
@@ -51,4 +50,11 @@ export default class Location extends BaseModel {
   /** The date and time the record was last updated */
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  /** The scope to preload the category name */
+  static nameCategory = scope<typeof Location, QueryScopeCallback<typeof Location>>((query) => {
+    query.select('name', 'categoryId').preload('category', (categoryQuery) => {
+      categoryQuery.select('name')
+    })
+  })
 }

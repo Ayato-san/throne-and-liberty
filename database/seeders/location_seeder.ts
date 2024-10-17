@@ -72,18 +72,38 @@ export default class extends BaseSeeder {
         categoryId: await findId('Instanced Dungeon'),
       },
       { name: 'Shadowed Crypt', categoryId: await findId('Dungeon') },
-      { name: "Syleus's Abyss", categoryId: await findId('Dungeon') },
+      {
+        name: "Syleus's Abyss",
+        categoryId: await findId('Dungeon'),
+        mapLink:
+          'https://gamemaps.gg/game/throne-and-liberty/map/solisium?poi=9b16e578-0ff7-4bca-8a42-dffeca592516',
+      },
       { name: 'Ant Nest', categoryId: await findId('Dungeon') },
       { name: 'Temple of Sylaveth', categoryId: await findId('Dungeon') },
       { name: 'Saurodoma Island', categoryId: await findId('Dungeon') },
-      { name: 'Sanctum of Desire', categoryId: await findId('Dungeon') },
+      {
+        name: 'Sanctum of Desire',
+        categoryId: await findId('Dungeon'),
+        mapLink:
+          'https://gamemaps.gg/game/throne-and-liberty/map/solisium?poi=9b0918af-b0cb-4bdb-9ab9-806f822a545e',
+      },
       { name: 'Ruins of Turayne', categoryId: await findId('Field Boss') },
       { name: 'Monolith Wastelands', categoryId: await findId('Field Boss') },
       { name: 'Purelight Hill', categoryId: await findId('Field Boss') },
       { name: 'Manawastes', categoryId: await findId('Field Boss') },
       { name: 'The Raging Wilds', categoryId: await findId('Field Boss') },
-      { name: 'Tevent Temple', categoryId: await findId('Arch Boss') },
-      { name: "Queen's Trap", categoryId: await findId('Arch Boss') },
+      {
+        name: 'Tevent Temple',
+        categoryId: await findId('Arch Boss'),
+        mapLink:
+          'https://gamemaps.gg/game/throne-and-liberty/map/solisium?poi=9b2b1b8d-479a-47d3-8653-a3cf14bf6177',
+      },
+      {
+        name: "Queen's Trap",
+        categoryId: await findId('Arch Boss'),
+        mapLink:
+          'https://gamemaps.gg/game/throne-and-liberty/map/solisium?poi=9b09311c-0edb-45db-981c-2fc598d9e820',
+      },
     ])
   }
 }

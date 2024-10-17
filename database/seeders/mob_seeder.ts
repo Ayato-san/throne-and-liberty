@@ -152,6 +152,50 @@ export default class extends BaseSeeder {
         maxLevel: 50,
         locationId: await findId('Tevent Temple'),
       },
+      {
+        name: 'Dark Enforcer',
+        maxLevel: 50,
+        locationId: await findId('Temple of Sylaveth'),
+      },
+      {
+        name: 'Dark Wizard',
+        maxLevel: 50,
+        locationId: await findId('Temple of Sylaveth'),
+      },
+      {
+        name: 'Demonhoof Tracker',
+        maxLevel: 50,
+        locationId: await findId("Syleus's Abyss"),
+      },
+      {
+        name: 'Demonhoof Head Shaman',
+        maxLevel: 50,
+        locationId: await findId("Syleus's Abyss"),
+      },
+      {
+        name: 'Enchanted Fire Orc Commander',
+        maxLevel: 50,
+      },
+      {
+        name: 'Fire Orc Chief Priest',
+        maxLevel: 50,
+      },
+      {
+        name: 'Reptilian Fighter',
+        maxLevel: 50,
+      },
+      {
+        name: 'Wraith Guard Dog',
+        maxLevel: 50,
+      },
+      {
+        name: 'Gray Wolf',
+        maxLevel: 50,
+      },
+      {
+        name: 'Unnamed Golem',
+        maxLevel: 1,
+      },
     ])
   }
 }
