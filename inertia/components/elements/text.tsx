@@ -1,8 +1,23 @@
 import type { HTMLAttributes } from 'react'
+import { tv, type VariantProps } from 'tailwind-variants'
 
-export interface TextProperties extends HTMLAttributes<HTMLParagraphElement> {
-  type?: 'p' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'span'
-}
+const textVariants = tv({
+  base: [],
+  variants: {
+    type: {
+      p: [],
+      h1: ['text-2xl', 'font-bold'],
+      h2: ['text-xl', 'font-medium'],
+      h3: ['text-lg'],
+      span: ['text-sm', 'font-light'],
+    },
+  },
+  defaultVariants: { type: 'p' },
+})
+
+export interface TextProperties
+  extends HTMLAttributes<HTMLParagraphElement>,
+    VariantProps<typeof textVariants> {}
 
 export function Text(props: TextProperties) {
   const { className, children, type = 'p', ...textProps } = props
@@ -10,7 +25,7 @@ export function Text(props: TextProperties) {
   const Component = type
 
   return (
-    <Component className={className} {...textProps}>
+    <Component className={textVariants({ type, className })} {...textProps}>
       {children}
     </Component>
   )

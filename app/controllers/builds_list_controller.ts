@@ -4,7 +4,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import BuildsRepository from '../repositories/builds_repository.js'
 
 @inject()
-export default class BuildListsController {
+export default class BuildsListController {
   constructor(private repository: BuildsRepository) {}
 
   async handle({ inertia }: HttpContext) {

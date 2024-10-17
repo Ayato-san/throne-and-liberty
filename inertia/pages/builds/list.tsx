@@ -1,12 +1,13 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
+import { Head } from '@inertiajs/react'
 import { Link } from '~/components/elements/link'
 import { Text } from '~/components/elements/text'
 import { useEffect, useState } from 'react'
 
-import type BuildListsController from '#controllers/build_lists_controller'
-import type BuildsPresenter from '../../../app/presenters/builds_presenter'
+import type BuildsListController from '#controllers/builds_list_controller'
+import type BuildsPresenter from '#presenters/builds_presenter'
 
-type ListProps = InferPageProps<BuildListsController, 'handle'>
+type ListProps = InferPageProps<BuildsListController, 'handle'>
 
 function BuildName(build: BuildsPresenter) {
   const [name, setName] = useState('')
@@ -35,7 +36,9 @@ export default function List(props: ListProps) {
   const { builds } = props
 
   return (
-    <div>
+    <>
+      <Head title="Builds" />
+
       <Link href="/builds/add">Add Build</Link>
       <Text type="h1">Builds</Text>
       <ul>
@@ -43,6 +46,6 @@ export default function List(props: ListProps) {
           <BuildName key={build.id} {...build} />
         ))}
       </ul>
-    </div>
+    </>
   )
 }

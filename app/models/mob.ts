@@ -1,5 +1,5 @@
 import { Opaque } from '@adonisjs/core/types/helpers'
-import { BaseModel, belongsTo, column, manyToMany } from '@adonisjs/lucid/orm'
+import { BaseModel, belongsTo, column, computed, manyToMany } from '@adonisjs/lucid/orm'
 import type { BelongsTo, ManyToMany } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
 
@@ -44,6 +44,11 @@ export default class Mob extends BaseModel {
     pivotColumns: ['drop_chance'],
   })
   declare items: ManyToMany<typeof Item>
+
+  @computed()
+  get dropChance(): number | undefined {
+    return this.$extras.pivot_drop_chance
+  }
 
   /** The date and time the record was created */
   @column.dateTime({ autoCreate: true })

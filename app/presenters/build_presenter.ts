@@ -9,7 +9,7 @@ type Base = {
   name: string
 }
 
-type Item = Base & { image: string }
+type Item = Base & { image: string; id: string }
 
 type Stuff = {
   primaryWeapon: Item
@@ -77,19 +77,35 @@ export default class BuildPresenter {
   /** The method to create a player build presenter from a player build model */
   static fromModel(build: PlayerBuild) {
     const stuff: Stuff = {
-      primaryWeapon: { name: build.primaryWeapon.name, image: build.primaryWeapon.image },
-      secondaryWeapon: { name: build.secondaryWeapon.name, image: build.secondaryWeapon.image },
-      head: { name: build.head.name, image: build.head.image },
-      cloak: { name: build.cloak.name, image: build.cloak.image },
-      chest: { name: build.chest.name, image: build.chest.image },
-      hands: { name: build.hands.name, image: build.hands.image },
-      legs: { name: build.legs.name, image: build.legs.image },
-      feet: { name: build.feet.name, image: build.feet.image },
-      necklace: { name: build.necklace.name, image: build.necklace.image },
-      bracelet: { name: build.bracelet.name, image: build.bracelet.image },
-      primaryRing: { name: build.primaryRing.name, image: build.primaryRing.image },
-      secondaryRing: { name: build.secondaryRing.name, image: build.secondaryRing.image },
-      belt: { name: build.belt.name, image: build.belt.image },
+      primaryWeapon: {
+        name: build.primaryWeapon.name,
+        image: build.primaryWeapon.image,
+        id: build.primaryWeapon.id,
+      },
+      secondaryWeapon: {
+        name: build.secondaryWeapon.name,
+        image: build.secondaryWeapon.image,
+        id: build.secondaryWeapon.id,
+      },
+      head: { name: build.head.name, image: build.head.image, id: build.head.id },
+      cloak: { name: build.cloak.name, image: build.cloak.image, id: build.cloak.id },
+      chest: { name: build.chest.name, image: build.chest.image, id: build.chest.id },
+      hands: { name: build.hands.name, image: build.hands.image, id: build.hands.id },
+      legs: { name: build.legs.name, image: build.legs.image, id: build.legs.id },
+      feet: { name: build.feet.name, image: build.feet.image, id: build.feet.id },
+      necklace: { name: build.necklace.name, image: build.necklace.image, id: build.necklace.id },
+      bracelet: { name: build.bracelet.name, image: build.bracelet.image, id: build.bracelet.id },
+      primaryRing: {
+        name: build.primaryRing.name,
+        image: build.primaryRing.image,
+        id: build.primaryRing.id,
+      },
+      secondaryRing: {
+        name: build.secondaryRing.name,
+        image: build.secondaryRing.image,
+        id: build.secondaryRing.id,
+      },
+      belt: { name: build.belt.name, image: build.belt.image, id: build.belt.id },
     }
 
     const locations = uniqueBy<Location>(

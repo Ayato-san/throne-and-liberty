@@ -12,7 +12,7 @@ const items: ItemsInfos[] = [
     name: 'Flamewrought Bindings',
     mobs: [{ name: 'Avolos Guardian' }, { name: 'Frenzied Avolos Guardian' }],
   },
-  { name: 'Bracers of the Primal King', mobs: [{ name: 'Lequirus' }] },
+  { name: 'Bracers of the Primal King', mobs: [{ name: 'Lequirus', chance: 13 }] },
   {
     name: 'Shock Commander Plate Armor',
     mobs: [
@@ -25,7 +25,11 @@ const items: ItemsInfos[] = [
   { name: 'Ruby Bangle', mobs: [{ name: 'Elder Aridus' }, { name: 'Reptilian Fighter' }] },
   {
     name: 'Phantom Wolf Tunic',
-    mobs: [{ name: 'Grayeye' }, { name: 'Kertaki' }, { name: 'Toublek' }],
+    mobs: [
+      { name: 'Grayeye', chance: 13 },
+      { name: 'Kertaki', chance: 1 },
+      { name: 'Toublek', chance: 2 },
+    ],
   },
   { name: 'Ancient Tapestry Mantle', mobs: [{ name: 'Dark Enforcer' }] },
   { name: 'Forsaken Embrace', mobs: [{ name: 'Junobote' }] },
@@ -62,7 +66,13 @@ const items: ItemsInfos[] = [
   },
   {
     name: 'Shadow Harvester Grips',
-    mobs: [{ name: 'Avolos Pyromancer' }, { name: 'Frenzied Avolos Pyromancer' }],
+    mobs: [
+      { name: 'Avolos Pyromancer' },
+      { name: 'Frenzied Avolos Pyromancer' },
+      { name: 'Rex Chimaerus', chance: 2 },
+      { name: 'Shakarux', chance: 1 },
+      { name: 'Limuny Bercant', chance: 13 },
+    ],
   },
   {
     name: 'Shock Commander Gauntlets',
@@ -70,6 +80,8 @@ const items: ItemsInfos[] = [
       { name: 'Limuny Bercant', chance: 13 },
       { name: 'Rex Chimaerus', chance: 2 },
       { name: 'Shakarux', chance: 1 },
+      { name: 'Wraith Guard Dog' },
+      { name: 'Tevent' },
     ],
   },
   {

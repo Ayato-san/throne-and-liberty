@@ -1,5 +1,13 @@
 import { Opaque } from '@adonisjs/core/types/helpers'
-import { BaseModel, belongsTo, column, hasMany, manyToMany, scope } from '@adonisjs/lucid/orm'
+import {
+  BaseModel,
+  belongsTo,
+  column,
+  computed,
+  hasMany,
+  manyToMany,
+  scope,
+} from '@adonisjs/lucid/orm'
 import { QueryScopeCallback } from '@adonisjs/lucid/types/model'
 import type { BelongsTo, HasMany, ManyToMany } from '@adonisjs/lucid/types/relations'
 import { DateTime } from 'luxon'
@@ -31,7 +39,9 @@ export default class Item extends BaseModel {
   declare categoryId: ItemCategoryId
 
   /** The category that the item belongs to */
-  @belongsTo(() => ItemCategory)
+  @belongsTo(() => ItemCategory, {
+    foreignKey: 'categoryId',
+  })
   declare category: BelongsTo<typeof ItemCategory>
 
   /** The tier id that the item belongs to */
@@ -39,7 +49,7 @@ export default class Item extends BaseModel {
   declare tierId: ItemTierId
 
   /** The tier that the item belongs to */
-  @belongsTo(() => ItemTier)
+  @belongsTo(() => ItemTier, { foreignKey: 'tierId' })
   declare tier: BelongsTo<typeof ItemTier>
 
   /** The mobs that the item belongs */
@@ -47,6 +57,11 @@ export default class Item extends BaseModel {
     pivotColumns: ['drop_chance'],
   })
   declare mobs: ManyToMany<typeof Mob>
+
+  @computed()
+  get dropChance(): number | undefined {
+    return this.$extras.pivot_drop_chance
+  }
 
   /** The builds that the item belongs */
   @hasMany(() => PlayerBuild)

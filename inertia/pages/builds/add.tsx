@@ -1,9 +1,9 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
+import { Head, useForm } from '@inertiajs/react'
 import Select, { type Item } from '~/components/form/select'
+import type { FormEvent } from 'react'
 
 import type BuildAddController from '#controllers/build_add_controller'
-import { FormEvent } from 'react'
-import { useForm } from '@inertiajs/react'
 
 type AddProps = InferPageProps<BuildAddController, 'handle'>
 
@@ -39,40 +39,44 @@ export default function Add(props: AddProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Select
-        items={classList}
-        placeholder="Templar"
-        id="class"
-        required
-        onValueChange={(event) => form.setData('class', event.value[0])}
-      >
-        Select a class
-      </Select>
+    <>
+      <Head title="Add Build" />
 
-      <Select
-        items={typesList}
-        placeholder="PvP"
-        id="type"
-        required
-        onValueChange={(event) => form.setData('type', event.value[0])}
-      >
-        Select the build type
-      </Select>
-
-      {form.data.type === 'PvP' && (
+      <form onSubmit={handleSubmit}>
         <Select
-          items={scaleList}
-          placeholder="small"
-          id="scale"
+          items={classList}
+          placeholder="Templar"
+          id="class"
           required
-          onValueChange={(event) => form.setData('scale', event.value[0])}
+          onValueChange={(event) => form.setData('class', event.value[0])}
         >
-          Select the build scale
+          Select a class
         </Select>
-      )}
 
-      <button type="submit">Submit</button>
-    </form>
+        <Select
+          items={typesList}
+          placeholder="PvP"
+          id="type"
+          required
+          onValueChange={(event) => form.setData('type', event.value[0])}
+        >
+          Select the build type
+        </Select>
+
+        {form.data.type === 'PvP' && (
+          <Select
+            items={scaleList}
+            placeholder="small"
+            id="scale"
+            required
+            onValueChange={(event) => form.setData('scale', event.value[0])}
+          >
+            Select the build scale
+          </Select>
+        )}
+
+        <button type="submit">Submit</button>
+      </form>
+    </>
   )
 }

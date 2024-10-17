@@ -1,5 +1,6 @@
 import { Head } from '@inertiajs/react'
 import { Link } from '~/components/elements/link'
+import { Text } from '~/components/elements/text'
 
 export default function Home() {
   return (
@@ -34,8 +35,9 @@ export default function Home() {
           </clipPath>
         </defs>
       </svg>
-      <h1>Homepage</h1>
+      <Text type="h1">Homepage</Text>
       <Link href="/builds">Builds</Link>
+      <Link href="/items">Items</Link>
     </>
   )
 }

@@ -1,4 +1,6 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
+import { Head } from '@inertiajs/react'
+import { Link } from '~/components/elements/link'
 import { Text } from '~/components/elements/text'
 import { useEffect, useState } from 'react'
 
@@ -6,13 +8,13 @@ import type BuildController from '#controllers/build_controller'
 
 type UniqueProps = InferPageProps<BuildController, 'handle'>
 
-function Item({ item }: { item: { name: string; image: string } }) {
+function Item({ item }: { item: { name: string; image: string; id: string } }) {
   return (
     <li className="flex flex-col items-center">
       <div className="overflow-hidden rounded-full bg-slate-800 p-2">
         <img src={item.image} alt={item.name} style={{ height: 60, width: 60 }} />
       </div>
-      <Text type="span">{item.name}</Text>
+      <Link href={'/items/' + item.id}>{item.name}</Link>
     </li>
   )
 }
@@ -37,6 +39,8 @@ export default function Unique(props: UniqueProps) {
 
   return (
     <>
+      <Head title={'Build - ' + name} />
+
       <Text type="h1">{name}</Text>
       <Text type="h2">Items</Text>
       <div className="grid grid-cols-3">

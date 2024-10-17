@@ -1,4 +1,9 @@
 import { Link as LinkInertia, type InertiaLinkProps } from '@inertiajs/react'
+import { tv } from 'tailwind-variants'
+
+const linkVariants = tv({
+  base: ['text-blue-500', 'hover:underline'],
+})
 
 const components = {
   inertia: LinkInertia,
@@ -27,7 +32,7 @@ export function Link(props: LinkProperties) {
 
   return (
     <Component
-      className="text-blue-500 hover:underline"
+      className={linkVariants({ className })}
       as={asElement}
       onProgress={onProgress}
       {...linkProps}
