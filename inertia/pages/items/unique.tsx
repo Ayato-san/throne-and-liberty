@@ -1,5 +1,6 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
 import { Head } from '@inertiajs/react'
+import { Link } from '~/components/elements/link'
 import { Text } from '~/components/elements/text'
 import { useEffect, useState } from 'react'
 
@@ -32,6 +33,13 @@ export default function Unique(props: UniqueProps) {
       <Head title={'Item - ' + item.name} />
 
       <Text type="h1">{item.name}</Text>
+      <Text type="span">
+        {item.gameLanternUrl !== null && (
+          <Link href={`https://throneandliberty.gameslantern.com/${item.gameLanternUrl}?level=9`}>
+            Game's Lantern URL
+          </Link>
+        )}
+      </Text>
       <div className="grid grid-cols-2">
         <img src={item.image} alt={item.name} />
         <div>

@@ -34,6 +34,10 @@ export default class Item extends BaseModel {
   @column()
   declare image: string
 
+  /** The gameslantern url of the item */
+  @column()
+  declare gameslanternUrl: string | null
+
   /** The category id that the item belongs to */
   @column()
   declare categoryId: ItemCategoryId

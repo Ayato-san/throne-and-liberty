@@ -11,6 +11,7 @@ export default class extends BaseSchema {
       table.uuid('tier_id').notNullable().references('item_tiers.id').onDelete('CASCADE') // Delete all items in a tier if the tier is deleted
 
       table.string('image').notNullable()
+      table.string('gameslantern_url').nullable()
 
       table.timestamp('created_at').notNullable()
       table.timestamp('updated_at').nullable()

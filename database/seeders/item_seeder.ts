@@ -14,6 +14,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Belt_00022.png',
+        gameslanternUrl: 'armor/belt-of-bloodlust',
       },
       {
         name: 'Flamewrought Bindings',
@@ -21,6 +22,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Belt_00019.png',
+        gameslanternUrl: 'armor/flamewrought-bindings',
       },
       {
         name: 'Bracers of the Primal King',
@@ -28,6 +30,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Bracelet_00023.png',
+        gameslanternUrl: 'armor/bracers-of-the-primal-king',
       },
       {
         name: 'Ruby Bangle',
@@ -35,6 +38,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Rare'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Bracelet_00024.png',
+        gameslanternUrl: 'armor/ruby-bangle',
       },
       {
         name: 'Phantom Wolf Tunic',
@@ -42,6 +46,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_Part_LE_M_TS_00010.png',
+        gameslanternUrl: 'armor/phantom-wolf-tunic',
       },
       {
         name: 'Shock Commander Plate Armor',
@@ -49,18 +54,21 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_Set_PL_M_TS_05002.png',
+        gameslanternUrl: 'armor/shock-commander-plate-armor',
       },
       {
         name: 'Ancient Tapestry Mantle',
         categoryId: await findCategoryId('Cloak'),
         tierId: await findTierId('Epic'),
         image: 'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_M_CA_00016.png',
+        gameslanternUrl: 'armor/ancient-tapestry-mantle',
       },
       {
         name: 'Forsaken Embrace',
         categoryId: await findCategoryId('Cloak'),
         tierId: await findTierId('Epic'),
         image: 'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_M_CA_00017.png',
+        gameslanternUrl: 'armor/forsaken-embrace',
       },
       {
         name: 'Heroic Boots of the Resistance',
@@ -68,6 +76,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_Set_PL_M_BT_06002.png',
+        gameslanternUrl: 'armor/heroic-boots-of-the-resistance',
       },
       {
         name: 'Sabatons of the Field General',
@@ -75,6 +84,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_Set_PL_M_BT_00018.png',
+        gameslanternUrl: 'armor/sabatons-of-the-field-general',
       },
       {
         name: 'Swirling Essence Shoes',
@@ -82,6 +92,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_Set_FA_M_BT_00008C.png',
+        gameslanternUrl: 'armor/swirling-essence-shoes',
       },
       {
         name: 'Gauntlets of the Field General',
@@ -89,6 +100,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_Set_PL_M_GL_00018.png',
+        gameslanternUrl: 'armor/gauntlets-of-the-field-general',
       },
       {
         name: 'Gauntlets of the Infernal Herald',
@@ -96,6 +108,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_set_PL_M_GL_00019.png',
+        gameslanternUrl: 'armor/gauntlets-of-the-infernal-herald',
       },
       {
         name: 'Shadow Harvester Grips',
@@ -103,6 +116,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_Set_LE_M_GL_00017A.png',
+        gameslanternUrl: 'armor/shadow-harvester-grips',
       },
       {
         name: 'Shock Commander Gauntlets',
@@ -110,6 +124,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_Set_PL_M_GL_05002.png',
+        gameslanternUrl: 'armor/shock-commander-gauntlets',
       },
       {
         name: 'Phantom Wolf Mask',
@@ -117,6 +132,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_Part_LE_M_HM_00005.png',
+        gameslanternUrl: 'armor/phantom-wolf-mask',
       },
       {
         name: 'Shadow Harvester Mask',
@@ -124,6 +140,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_Part_LE_M_HM_00008.png',
+        gameslanternUrl: 'armor/shadow-harvester-mask',
       },
       {
         name: 'Shock Commander Visor',
@@ -131,6 +148,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_Set_PL_M_HM_05002.png',
+        gameslanternUrl: 'armor/shock-commander-visor',
       },
       {
         name: 'Visage of the Executioner',
@@ -138,6 +156,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_Part_FA_M_HM_00006.png',
+        gameslanternUrl: 'armor/visage-of-the-executioner',
       },
       {
         name: 'Greaves of the Infernal Herald',
@@ -145,6 +164,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_set_PL_M_PT_00019.png',
+        gameslanternUrl: 'armor/greaves-of-the-infernal-herald',
       },
       {
         name: 'Heroic Trousers of the Resistance',
@@ -152,6 +172,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_Set_LE_M_PT_05003.png',
+        gameslanternUrl: 'armor/heroic-trousers-of-the-resistance',
       },
       {
         name: 'Shadow Harvester Trousers',
@@ -159,6 +180,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/P_Part_LE_M_PT_00007.png',
+        gameslanternUrl: 'armor/shadow-harvester-trousers',
       },
       {
         name: 'Clasp of the Conqueror',
@@ -166,6 +188,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Necklace_00017.png',
+        gameslanternUrl: 'armor/clasp-of-the-conqueror',
       },
       {
         name: 'Amber Dimensional Band',
@@ -173,6 +196,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Ring_00032.png',
+        gameslanternUrl: 'armor/amber-dimensional-band',
       },
       {
         name: 'Band of Universal Power',
@@ -180,6 +204,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Ring_00005.png',
+        gameslanternUrl: 'armor/band-of-universal-power',
       },
       {
         name: 'Etched Alabaster Band',
@@ -187,6 +212,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Ring_00003.png',
+        gameslanternUrl: 'armor/etched-alabaster-band',
       },
       {
         name: 'Sapphire Dimensional Band',
@@ -194,6 +220,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Ring_00033.png',
+        gameslanternUrl: 'armor/sapphire-dimensional-band',
       },
       {
         name: "Adentus's Gargantuan Greatsword",
@@ -201,12 +228,14 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Sword2h_00028.png',
+        gameslanternUrl: 'weapons/adentuss-gargantuan-greatsword',
       },
       {
         name: "Aelon's Rejuvenating Longbow",
         categoryId: await findCategoryId('Weapon'),
         tierId: await findTierId('Epic'),
         image: 'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Bow_00034.png',
+        gameslanternUrl: 'weapons/aelons-rejuvenating-longbow',
       },
       {
         name: "Excavator's Mysterious Scepter",
@@ -214,12 +243,14 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Wand_00012.png',
+        gameslanternUrl: 'weapons/excavators-mysterious-scepter',
       },
       {
         name: "Karnix's Netherbow",
         categoryId: await findCategoryId('Weapon'),
         tierId: await findTierId('Epic'),
         image: 'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Bow_00032.png',
+        gameslanternUrl: 'weapons/karnixs-netherbow',
       },
       {
         name: "Lequirus's Coveted Tome",
@@ -227,6 +258,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Wand_00013.png',
+        gameslanternUrl: 'weapons/lequiruss-coveted-tome',
       },
       {
         name: "Lequirus's Wicked Thorns",
@@ -234,6 +266,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Dagger_00014.png',
+        gameslanternUrl: 'weapons/lequiruss-wicked-thorns',
       },
       {
         name: "Nirma's Sword of Echoes",
@@ -241,6 +274,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Sword_00035.png',
+        gameslanternUrl: 'weapons/nirmas-sword-of-echoes',
       },
       {
         name: "Rex Chimaerus's Crossbows",
@@ -248,6 +282,7 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Crossbow_00007C.png',
+        gameslanternUrl: 'weapons/rex-chimaeruss-crossbows',
       },
       {
         name: "Talus's Crystalline Staff",
@@ -255,12 +290,14 @@ export default class extends BaseSeeder {
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Staff_00032.png',
+        gameslanternUrl: 'weapons/taluss-crystalline-staff',
       },
       {
         name: "Toublek's Deathmark Longbow",
         categoryId: await findCategoryId('Weapon'),
         tierId: await findTierId('Epic'),
         image: 'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Bow_00033.png',
+        gameslanternUrl: 'weapons/toubleks-deathmark-longbow',
       },
     ])
   }
