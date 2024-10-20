@@ -3,7 +3,7 @@ import { Head } from '@inertiajs/react'
 import { Link } from '~/components/elements/link'
 import { Text } from '~/components/elements/text'
 
-import type ItemsListController from '#controllers/items_list_controller'
+import type ItemsListController from '#controllers/items/items_list_controller'
 import type { ItemsPresenter } from '#repositories/items_repository'
 
 type ListProps = InferPageProps<ItemsListController, 'handle'>

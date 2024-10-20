@@ -1,7 +1,7 @@
 import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
-import ItemsRepository from '../repositories/items_repository.js'
+import ItemsRepository from '../../repositories/items_repository.js'
 
 @inject()
 export default class ItemsListController {

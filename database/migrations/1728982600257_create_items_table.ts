@@ -8,6 +8,7 @@ export default class extends BaseSchema {
       table.uuid('id').primary().defaultTo(this.db.rawQuery('gen_random_uuid()').knexQuery)
       table.string('name').notNullable()
       table.uuid('category_id').notNullable().references('item_categories.id').onDelete('CASCADE') // Delete all items in a category if the category is deleted
+      table.uuid('sub_category_id').nullable().references('weapons.id').onDelete('CASCADE') // Delete all items in a sub category if the sub category is deleted
       table.uuid('tier_id').notNullable().references('item_tiers.id').onDelete('CASCADE') // Delete all items in a tier if the tier is deleted
 
       table.string('image').notNullable()

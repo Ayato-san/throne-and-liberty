@@ -16,6 +16,7 @@ import ItemCategory, { type ItemCategoryId } from './item_category.js'
 import ItemTier, { type ItemTierId } from './item_tier.js'
 import Mob from './mob.js'
 import PlayerBuild from './player_build.js'
+import Weapon, { WeaponId } from './weapon.js'
 
 /** The opaque type for the item id */
 export type ItemId = Opaque<'ItemId', string>
@@ -47,6 +48,16 @@ export default class Item extends BaseModel {
     foreignKey: 'categoryId',
   })
   declare category: BelongsTo<typeof ItemCategory>
+
+  /** The subcategory id that the item belongs to */
+  @column()
+  declare subCategoryId: WeaponId | null
+
+  /** The subcategory that the item belongs to */
+  @belongsTo(() => Weapon, {
+    foreignKey: 'subCategoryId',
+  })
+  declare subCategory: BelongsTo<typeof Weapon>
 
   /** The tier id that the item belongs to */
   @column()

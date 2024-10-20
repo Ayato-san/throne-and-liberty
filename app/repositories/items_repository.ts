@@ -1,3 +1,4 @@
+import type { ItemId } from '#models/item'
 import Item from '#models/item'
 import type { PublicOnly } from '#types/utils'
 import { uniqueBy } from '../utils/array.js'
@@ -17,7 +18,15 @@ export default class ItemsRepository {
    * Fetch all items from the database
    */
   async all() {
-    const classes = await Item.query().select('id', 'name', 'image').orderBy('name')
+    const classes = await Item.query()
+      .select('id', 'name', 'image', 'categoryId', 'subCategoryId')
+      .preload('category', (query) => {
+        query.select('name')
+      })
+      .preload('subCategory', (query) => {
+        query.select('name')
+      })
+      .orderBy('name')
 
     return ItemsPresenter.fromArray(classes)
   }
@@ -25,7 +34,7 @@ export default class ItemsRepository {
   /**
    * Fetch a item by its id
    */
-  async find(id: string) {
+  async find(id: ItemId) {
     const item = await Item.query()
       .select('id', 'name', 'image', 'categoryId', 'tierId', 'gameslanternUrl')
       .where('id', id)
@@ -40,6 +49,23 @@ export default class ItemsRepository {
 
     return ItemPresenter.fromModel(item)
   }
+
+  async allByCategory(category: string) {
+    const items = await Item.query()
+      .select('id', 'name', 'image', 'categoryId', 'subCategoryId')
+      .preload('category', (query) => {
+        query.select('name')
+      })
+      .preload('subCategory', (query) => {
+        query.select('name')
+      })
+      .orderBy('name')
+      .whereHas('category', (query) => {
+        query.where('name', category)
+      })
+
+    return ItemsPresenter.fromArray(items)
+  }
 }
 
 export class ItemsPresenter {
@@ -49,11 +75,14 @@ export class ItemsPresenter {
   name: string
   /** The image of the item */
   image: string
+  /** The category of the item */
+  category: string
 
-  constructor({ id, name, image }: PublicOnly<ItemsPresenter>) {
+  constructor({ id, name, image, category }: PublicOnly<ItemsPresenter>) {
     this.id = id
     this.name = name
     this.image = image
+    this.category = category
   }
 
   static fromArray(items: Item[]) {
@@ -62,6 +91,7 @@ export class ItemsPresenter {
         id: item.id,
         name: item.name,
         image: item.image,
+        category: item.subCategory?.name || item.category.name,
       })
     })
   }

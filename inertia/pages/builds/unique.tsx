@@ -4,7 +4,7 @@ import { Link } from '~/components/elements/link'
 import { Text } from '~/components/elements/text'
 import { useEffect, useState } from 'react'
 
-import type BuildController from '#controllers/build_controller'
+import type BuildController from '#controllers/builds/build_controller'
 
 type UniqueProps = InferPageProps<BuildController, 'handle'>
 
@@ -25,16 +25,10 @@ export default function Unique(props: UniqueProps) {
   const [name, setName] = useState('')
 
   useEffect(() => {
-    let specs: string = ''
-    const name = build.class || ''
-
-    if (build.scale) {
-      specs += build.scale + ' Scale '
-    }
-
-    specs += build.type
-
-    setName(name + ' - ' + specs)
+    let name = build.class || ''
+    if (build.scale) name += ' - ' + build.scale + ' Scale '
+    name += build.type
+    setName(name)
   }, [build])
 
   return (
@@ -42,6 +36,7 @@ export default function Unique(props: UniqueProps) {
       <Head title={'Build - ' + name} />
 
       <Text type="h1">{name}</Text>
+      <Link href={`/builds/compare?source=${build.id}`}>Compare</Link>
       <Text type="h2">Items</Text>
       <div className="grid grid-cols-3">
         <ul>

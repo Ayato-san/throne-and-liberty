@@ -4,7 +4,7 @@ import { Link } from '~/components/elements/link'
 import { Text } from '~/components/elements/text'
 import { useEffect, useState } from 'react'
 
-import type BuildsListController from '#controllers/builds_list_controller'
+import type BuildsListController from '#controllers/builds/builds_list_controller'
 import type BuildsPresenter from '#presenters/builds_presenter'
 
 type ListProps = InferPageProps<BuildsListController, 'handle'>
@@ -13,16 +13,10 @@ function BuildName(build: BuildsPresenter) {
   const [name, setName] = useState('')
 
   useEffect(() => {
-    let specs: string = ''
-    const name = build.class || ''
-
-    if (build.scale) {
-      specs += build.scale + ' Scale '
-    }
-
-    specs += build.type
-
-    setName(name + ' - ' + specs)
+    let name = build.class || ''
+    if (build.scale) name += ' - ' + build.scale + ' Scale '
+    name += build.type
+    setName(name)
   }, [build])
 
   return (
@@ -40,6 +34,7 @@ export default function List(props: ListProps) {
       <Head title="Builds" />
 
       <Link href="/builds/add">Add Build</Link>
+      <Link href="/builds/compare">Compare</Link>
       <Text type="h1">Builds</Text>
       <ul>
         {builds.map((build) => (

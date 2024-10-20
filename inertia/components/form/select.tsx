@@ -6,11 +6,20 @@ import {
 import { Portal } from '@ark-ui/react/portal'
 import { faAnglesUpDown, faCheck } from '@fortawesome/pro-light-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 type Item = {
   value: number | string
   label: string
+}
+
+export function arrayToItem<T extends string | number>(array: T[]): Item[] {
+  return array.map(
+    (item): Item => ({
+      value: item,
+      label: item.toString(),
+    })
+  )
 }
 
 interface SelectProperties<T extends Item>
@@ -33,6 +42,8 @@ export default function Select<T extends Item>(props: SelectProperties<T>) {
   const [items, setItems] = useState(initialItems)
 
   const collection = useMemo(() => createListCollection({ items }), [items])
+
+  useEffect(() => setItems(initialItems), [initialItems])
 
   const handleInputChange = (details: ArkSelect.InputValueChangeDetails) => {
     setItems(
@@ -73,7 +84,7 @@ export default function Select<T extends Item>(props: SelectProperties<T>) {
                 <ArkSelect.Item
                   key={item.value}
                   item={item}
-                  className="flex h-10 cursor-pointer items-center justify-between rounded-sm px-2 text-base transition-colors hover:bg-gray-100 checked:bg-gray-100"
+                  className="flex h-10 cursor-pointer items-center justify-between rounded-sm px-2 text-base transition-colors data-highlighted:bg-gray-100 hover:bg-gray-100 checked:bg-gray-100"
                 >
                   <ArkSelect.ItemText>{item.label}</ArkSelect.ItemText>
                   <ArkSelect.ItemIndicator className="size-4" asChild>

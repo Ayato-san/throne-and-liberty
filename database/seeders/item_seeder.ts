@@ -4,6 +4,8 @@ import Item from '#models/item'
 import ItemCategory, { type ItemCategoryId } from '#models/item_category'
 import type { ItemTierId } from '#models/item_tier'
 import ItemTier from '#models/item_tier'
+import type { WeaponId } from '#models/weapon'
+import Weapon from '#models/weapon'
 
 export default class extends BaseSeeder {
   async run() {
@@ -225,6 +227,7 @@ export default class extends BaseSeeder {
       {
         name: "Adentus's Gargantuan Greatsword",
         categoryId: await findCategoryId('Weapon'),
+        subCategoryId: await findSubCategoryId('Greatsword'),
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Sword2h_00028.png',
@@ -233,6 +236,7 @@ export default class extends BaseSeeder {
       {
         name: "Aelon's Rejuvenating Longbow",
         categoryId: await findCategoryId('Weapon'),
+        subCategoryId: await findSubCategoryId('Bow'),
         tierId: await findTierId('Epic'),
         image: 'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Bow_00034.png',
         gameslanternUrl: 'weapons/aelons-rejuvenating-longbow',
@@ -240,6 +244,7 @@ export default class extends BaseSeeder {
       {
         name: "Excavator's Mysterious Scepter",
         categoryId: await findCategoryId('Weapon'),
+        subCategoryId: await findSubCategoryId('Wand'),
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Wand_00012.png',
@@ -248,6 +253,7 @@ export default class extends BaseSeeder {
       {
         name: "Karnix's Netherbow",
         categoryId: await findCategoryId('Weapon'),
+        subCategoryId: await findSubCategoryId('Bow'),
         tierId: await findTierId('Epic'),
         image: 'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Bow_00032.png',
         gameslanternUrl: 'weapons/karnixs-netherbow',
@@ -255,6 +261,7 @@ export default class extends BaseSeeder {
       {
         name: "Lequirus's Coveted Tome",
         categoryId: await findCategoryId('Weapon'),
+        subCategoryId: await findSubCategoryId('Wand'),
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Wand_00013.png',
@@ -263,6 +270,7 @@ export default class extends BaseSeeder {
       {
         name: "Lequirus's Wicked Thorns",
         categoryId: await findCategoryId('Weapon'),
+        subCategoryId: await findSubCategoryId('Dagger'),
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Dagger_00014.png',
@@ -271,6 +279,7 @@ export default class extends BaseSeeder {
       {
         name: "Nirma's Sword of Echoes",
         categoryId: await findCategoryId('Weapon'),
+        subCategoryId: await findSubCategoryId('Sword'),
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Sword_00035.png',
@@ -279,6 +288,7 @@ export default class extends BaseSeeder {
       {
         name: "Rex Chimaerus's Crossbows",
         categoryId: await findCategoryId('Weapon'),
+        subCategoryId: await findSubCategoryId('Crossbow'),
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Crossbow_00007C.png',
@@ -287,6 +297,7 @@ export default class extends BaseSeeder {
       {
         name: "Talus's Crystalline Staff",
         categoryId: await findCategoryId('Weapon'),
+        subCategoryId: await findSubCategoryId('Staff'),
         tierId: await findTierId('Epic'),
         image:
           'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Staff_00032.png',
@@ -295,6 +306,7 @@ export default class extends BaseSeeder {
       {
         name: "Toublek's Deathmark Longbow",
         categoryId: await findCategoryId('Weapon'),
+        subCategoryId: await findSubCategoryId('Bow'),
         tierId: await findTierId('Epic'),
         image: 'https://gameslantern.com/storage/sites/throne-and-liberty/armor/IT_P_Bow_00033.png',
         gameslanternUrl: 'weapons/toubleks-deathmark-longbow',
@@ -305,7 +317,7 @@ export default class extends BaseSeeder {
 
 const categories: Record<string, ItemCategoryId> = {}
 
-async function findCategoryId(name: string): Promise<ItemCategoryId> {
+async function findCategoryId(name: string) {
   if (!categories[name]) {
     const category = await ItemCategory.findByOrFail('name', name)
     categories[category.name] = category.id
@@ -313,6 +325,18 @@ async function findCategoryId(name: string): Promise<ItemCategoryId> {
   }
 
   return categories[name]
+}
+
+const subCategories: Record<string, WeaponId> = {}
+
+async function findSubCategoryId(name: string) {
+  if (!subCategories[name]) {
+    const subCategory = await Weapon.findByOrFail('name', name)
+    subCategories[subCategory.name] = subCategory.id
+    return subCategory.id
+  }
+
+  return subCategories[name]
 }
 
 const tiers: Record<string, ItemTierId> = {}

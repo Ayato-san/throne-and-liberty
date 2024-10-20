@@ -4,7 +4,7 @@ import { Link } from '~/components/elements/link'
 import { Text } from '~/components/elements/text'
 import { useEffect, useState } from 'react'
 
-import type ItemController from '#controllers/item_controller'
+import type ItemController from '#controllers/items/item_controller'
 import type { ItemPresenter } from '#repositories/items_repository'
 
 type UniqueProps = InferPageProps<ItemController, 'handle'>

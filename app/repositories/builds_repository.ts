@@ -1,4 +1,7 @@
+import type BuildAddController from '#controllers/builds/build_add_controller'
+import type { ItemId } from '#models/item'
 import PlayerBuild from '#models/player_build'
+import type { WeaponAssociationId } from '#models/weapon_association'
 import BuildPresenter from '../presenters/build_presenter.js'
 import BuildsPresenter from '../presenters/builds_presenter.js'
 
@@ -34,8 +37,30 @@ export default class BuildsRepository {
     return BuildPresenter.fromModel(build)
   }
 
-  async create(data: any) {
-    console.log(data)
+  async create(data: Awaited<ReturnType<typeof BuildAddController.validator.validate>>) {
+    const build = await PlayerBuild.create({
+      scale: data.scale,
+      type: data.type,
+      associationId: data.class as WeaponAssociationId,
+      primaryWeaponId: data.primaryWeapon as ItemId,
+      secondaryWeaponId: data.secondaryWeapon as ItemId,
+      headId: data.helmet as ItemId,
+      cloakId: data.cloak as ItemId,
+      chestId: data.chest as ItemId,
+      handsId: data.gloves as ItemId,
+      legsId: data.legs as ItemId,
+      feetId: data.boots as ItemId,
+      necklaceId: data.necklaces as ItemId,
+      braceletId: data.bracelets as ItemId,
+      primaryRingId: data.primaryRing as ItemId,
+      secondaryRingId: data.secondaryRing as ItemId,
+      beltId: data.belt as ItemId,
+    })
+
+    if (build.$isPersisted) {
+      return build.id
+    }
+    return null
   }
 
   // async update(id: string, data: any) {}
