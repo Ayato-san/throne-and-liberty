@@ -1,10 +1,10 @@
-import { Field as ArkTextInput } from '@ark-ui/react/field'
-import { NumberInput as ArkNumberInput } from '@ark-ui/react/number-input'
+import type { Field as ArkTextInput } from '@ark-ui/react/field'
+import type { NumberInput as ArkNumberInput } from '@ark-ui/react/number-input'
 
-const components = {
-  text: ArkTextInput,
-  number: ArkNumberInput,
-}
+// const components = {
+//   text: ArkTextInput,
+//   number: ArkNumberInput,
+// }
 
 interface InputTextProperties extends Omit<ArkTextInput.RootProps, 'asChild'> {
   type: 'text'

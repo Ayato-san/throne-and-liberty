@@ -1,10 +1,12 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
 import { Head } from '@inertiajs/react'
+import { ArrowCompare, LeftCompare, RightCompare } from '~/components/comparaison'
 import { Loader } from '~/components/elements/loader'
 import { Text } from '~/components/elements/text'
 import type { Item } from '~/components/form/select'
 import Select from '~/components/form/select'
 import { useFetch } from '~/hooks/use_fetch_hooks'
+import { addQueryParams, removeQueryParams } from '~/scripts/window'
 import { useEffect, useState } from 'react'
 
 import type BuildsCompareController from '#controllers/builds/builds_compare_controller'
@@ -12,14 +14,93 @@ import type BuildPresenter from '#presenters/build_presenter'
 
 type CompareProps = InferPageProps<BuildsCompareController, 'handle'>
 
-function ListItem({
-  children,
-  other,
-}: {
-  children: string | undefined
-  other: string | undefined
-}) {
-  return <li className={children === other ? '' : 'text-red-500'}>{children}</li>
+type CompareItemProps = { source?: string; target?: string }
+type CompareItemDoubleProps = CompareItemProps & { source2?: string; target2?: string }
+
+function CompareItem({ source, target }: CompareItemProps) {
+  if (source === target) {
+    return (
+      <>
+        <LeftCompare classes="equals">{source}</LeftCompare>
+        <RightCompare classes="blank" />
+      </>
+    )
+  }
+  return (
+    <>
+      <LeftCompare>{source}</LeftCompare>
+      <ArrowCompare />
+      <RightCompare>{target}</RightCompare>
+    </>
+  )
+}
+
+function CompareItemDouble({ source, source2, target, target2 }: CompareItemDoubleProps) {
+  if ((source === target && source2 === target2) || (source === target2 && source2 === target)) {
+    return (
+      <>
+        <LeftCompare classes="equals">{source}</LeftCompare>
+        <RightCompare classes="blank" />
+        <LeftCompare classes="equals">{source2}</LeftCompare>
+        <RightCompare classes="blank" />
+      </>
+    )
+  }
+  if (source === target) {
+    return (
+      <>
+        <LeftCompare classes="equals">{source}</LeftCompare>
+        <RightCompare classes="blank" />
+        <LeftCompare>{source2}</LeftCompare>
+        <ArrowCompare />
+        <RightCompare>{target2}</RightCompare>
+      </>
+    )
+  }
+  if (source === target2) {
+    return (
+      <>
+        <LeftCompare classes="equals">{source}</LeftCompare>
+        <RightCompare classes="blank" />
+        <LeftCompare>{source2}</LeftCompare>
+        <ArrowCompare />
+        <RightCompare>{target}</RightCompare>
+      </>
+    )
+  }
+  if (source2 === target) {
+    return (
+      <>
+        <LeftCompare>{source}</LeftCompare>
+        <ArrowCompare />
+        <RightCompare>{target2}</RightCompare>
+        <LeftCompare classes="equals">{source2}</LeftCompare>
+        <RightCompare classes="blank" />
+      </>
+    )
+  }
+  if (source2 === target2) {
+    return (
+      <>
+        <LeftCompare>{source}</LeftCompare>
+        <ArrowCompare />
+        <RightCompare>{target}</RightCompare>
+        <LeftCompare classes="equals">{source2}</LeftCompare>
+        <RightCompare classes="blank" />
+      </>
+    )
+  }
+
+  return (
+    <>
+      <LeftCompare>{source}</LeftCompare>
+      <ArrowCompare />
+      <RightCompare>{target}</RightCompare>
+      <LeftCompare>{source2}</LeftCompare>
+      <ArrowCompare />
+      <RightCompare>{target2}</RightCompare>
+    </>
+  )
 }
 
 export default function Compare(props: CompareProps) {
@@ -42,8 +123,10 @@ export default function Compare(props: CompareProps) {
       if (dataSource.scale) name += ' - ' + dataSource.scale + ' Scale '
       name += dataSource.type
       setNameSource(name)
+      addQueryParams('source', dataSource.id)
     } else {
       setNameSource('')
+      removeQueryParams('source')
     }
   }, [dataSource])
 
@@ -68,8 +151,10 @@ export default function Compare(props: CompareProps) {
       if (dataTarget.scale) name += ' - ' + dataTarget.scale + ' Scale '
       name += dataTarget.type
       setNameTarget(name)
+      addQueryParams('target', dataTarget.id)
     } else {
       setNameTarget('')
+      removeQueryParams('target')
     }
   }, [dataTarget])
 
@@ -79,6 +164,7 @@ export default function Compare(props: CompareProps) {
 
       <div className="grid grid-cols-2 gap-x-2">
         <div>
+          <Text type="h1">Source Class</Text>
           <Select
             items={buildList}
             placeholder="Templar"
@@ -88,27 +174,12 @@ export default function Compare(props: CompareProps) {
           >
             Select the first class
           </Select>
-
           <Loader isLoading={loadingSource} error={errorSource}>
-            <Text type="h1">{nameSource}</Text>
-            <ul>
-              <li>{dataSource?.stuff.primaryWeapon.name}</li>
-              <li>{dataSource?.stuff.secondaryWeapon.name}</li>
-              <li>{dataSource?.stuff.head.name}</li>
-              <li>{dataSource?.stuff.cloak.name}</li>
-              <li>{dataSource?.stuff.chest.name}</li>
-              <li>{dataSource?.stuff.hands.name}</li>
-              <li>{dataSource?.stuff.legs.name}</li>
-              <li>{dataSource?.stuff.feet.name}</li>
-              <li>{dataSource?.stuff.necklace.name}</li>
-              <li>{dataSource?.stuff.bracelet.name}</li>
-              <li>{dataSource?.stuff.primaryRing.name}</li>
-              <li>{dataSource?.stuff.secondaryRing.name}</li>
-              <li>{dataSource?.stuff.belt.name}</li>
-            </ul>
+            <Text type="h2">{nameSource}</Text>
           </Loader>
         </div>
         <div>
+          <Text type="h1">Target Class</Text>
           <Select
             items={buildList}
             placeholder="Templar"
@@ -118,44 +189,41 @@ export default function Compare(props: CompareProps) {
           >
             Select the second class
           </Select>
-
           <Loader isLoading={loadingTarget} error={errorTarget}>
-            <Text type="h1">{nameTarget}</Text>
-            <ul>
-              <ListItem other={dataSource?.stuff.primaryWeapon.name}>
-                {dataTarget?.stuff.primaryWeapon.name}
-              </ListItem>
-              <ListItem other={dataSource?.stuff.secondaryWeapon.name}>
-                {dataTarget?.stuff.secondaryWeapon.name}
-              </ListItem>
-              <ListItem other={dataSource?.stuff.head.name}>{dataTarget?.stuff.head.name}</ListItem>
-              <ListItem other={dataSource?.stuff.cloak.name}>
-                {dataTarget?.stuff.cloak.name}
-              </ListItem>
-              <ListItem other={dataSource?.stuff.chest.name}>
-                {dataTarget?.stuff.chest.name}
-              </ListItem>
-              <ListItem other={dataSource?.stuff.hands.name}>
-                {dataTarget?.stuff.hands.name}
-              </ListItem>
-              <ListItem other={dataSource?.stuff.legs.name}>{dataTarget?.stuff.legs.name}</ListItem>
-              <ListItem other={dataSource?.stuff.feet.name}>{dataTarget?.stuff.feet.name}</ListItem>
-              <ListItem other={dataSource?.stuff.necklace.name}>
-                {dataTarget?.stuff.necklace.name}
-              </ListItem>
-              <ListItem other={dataSource?.stuff.bracelet.name}>
-                {dataTarget?.stuff.bracelet.name}
-              </ListItem>
-              <ListItem other={dataSource?.stuff.primaryRing.name}>
-                {dataTarget?.stuff.primaryRing.name}
-              </ListItem>
-              <ListItem other={dataSource?.stuff.secondaryRing.name}>
-                {dataTarget?.stuff.secondaryRing.name}
-              </ListItem>
-              <ListItem other={dataSource?.stuff.belt.name}>{dataTarget?.stuff.belt.name}</ListItem>
-            </ul>
+            <Text type="h2" className="text-right">
+              {nameTarget}
+            </Text>
           </Loader>
         </div>
+      </div>
+      <div className="grid grid-cols-6 items-center">
+        <CompareItemDouble
+          source={dataSource?.stuff.primaryWeapon.name}
+          source2={dataSource?.stuff.secondaryWeapon.name}
+          target={dataTarget?.stuff.primaryWeapon.name}
+          target2={dataTarget?.stuff.secondaryWeapon.name}
+        />
+        <CompareItem source={dataSource?.stuff.head.name} target={dataTarget?.stuff.head.name} />
+        <CompareItem source={dataSource?.stuff.cloak.name} target={dataTarget?.stuff.cloak.name} />
+        <CompareItem source={dataSource?.stuff.chest.name} target={dataTarget?.stuff.chest.name} />
+        <CompareItem source={dataSource?.stuff.hands.name} target={dataTarget?.stuff.hands.name} />
+        <CompareItem source={dataSource?.stuff.legs.name} target={dataTarget?.stuff.legs.name} />
+        <CompareItem source={dataSource?.stuff.feet.name} target={dataTarget?.stuff.feet.name} />
+        <CompareItem
+          source={dataSource?.stuff.necklace.name}
+          target={dataTarget?.stuff.necklace.name}
+        />
+        <CompareItem
+          source={dataSource?.stuff.bracelet.name}
+          target={dataTarget?.stuff.bracelet.name}
+        />
+        <CompareItemDouble
+          source={dataSource?.stuff.primaryRing.name}
+          source2={dataSource?.stuff.secondaryRing.name}
+          target={dataTarget?.stuff.primaryRing.name}
+          target2={dataTarget?.stuff.secondaryRing.name}
+        />
+        <CompareItem source={dataSource?.stuff.belt.name} target={dataTarget?.stuff.belt.name} />
       </div>
     </>
   )
