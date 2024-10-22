@@ -2,7 +2,7 @@ import type { InferPageProps } from '@adonisjs/inertia/types'
 import { Head } from '@inertiajs/react'
 import { Link } from '~/components/elements/link'
 import { Text } from '~/components/elements/text'
-import { useEffect, useState } from 'react'
+import { useBuildName } from '~/hooks/use_build_name_hooks'
 
 import type BuildController from '#controllers/builds/build_controller'
 
@@ -22,14 +22,7 @@ function Item({ item }: { item: { name: string; image: string; id: string } }) {
 export default function Unique(props: UniqueProps) {
   const { build } = props
 
-  const [name, setName] = useState('')
-
-  useEffect(() => {
-    let name = build.class || ''
-    if (build.scale) name += ' - ' + build.scale + ' Scale '
-    name += build.type
-    setName(name)
-  }, [build])
+  const name = useBuildName(build)
 
   return (
     <>

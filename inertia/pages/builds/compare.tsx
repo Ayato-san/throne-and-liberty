@@ -1,12 +1,13 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
 import { Head } from '@inertiajs/react'
 import { CompareDoubleItem, CompareItem } from '~/components/comparaison'
+import { Link } from '~/components/elements/link'
 import { Loader } from '~/components/elements/loader'
 import { Text } from '~/components/elements/text'
 import type { Item } from '~/components/form/select'
 import Select from '~/components/form/select'
+import { formatName, useBuildName } from '~/hooks/use_build_name_hooks'
 import { useFetch } from '~/hooks/use_fetch_hooks'
-import { formatName } from '~/scripts/build_name'
 import { addQueryParams, removeQueryParams } from '~/scripts/window'
 import { useEffect, useState } from 'react'
 
@@ -35,21 +36,19 @@ export default function Compare(props: CompareProps) {
     error: errorTarget,
   } = useFetch<BuildPresenter>('/builds/' + targetId)
 
-  const [nameSource, setNameSource] = useState('')
+  const nameSource = useBuildName(dataSource)
 
   useEffect(() => {
     if (dataSource) {
-      setNameSource(formatName(dataSource))
       addQueryParams('source', dataSource.id)
       setNbDiff(NbDiff(dataSource?.stuff, dataTarget?.stuff))
     } else {
-      setNameSource('')
       removeQueryParams('source')
       setNbDiff(0)
     }
   }, [dataSource])
 
-  const [nameTarget, setNameTarget] = useState('')
+  const nameTarget = useBuildName(dataTarget)
 
   const buildList: Item[] = builds.map((data) => {
     return { value: data.id, label: formatName(data) }
@@ -57,11 +56,9 @@ export default function Compare(props: CompareProps) {
 
   useEffect(() => {
     if (dataTarget) {
-      setNameTarget(formatName(dataTarget))
       addQueryParams('target', dataTarget.id)
       setNbDiff(NbDiff(dataSource?.stuff, dataTarget?.stuff))
     } else {
-      setNameTarget('')
       removeQueryParams('target')
       setNbDiff(0)
     }
@@ -84,7 +81,9 @@ export default function Compare(props: CompareProps) {
             Select the first class
           </Select>
           <Loader isLoading={loadingSource} error={errorSource}>
-            <Text type="h2">{nameSource}</Text>
+            <Link href={'/builds/' + sourceId}>
+              <Text type="h2">{nameSource}</Text>
+            </Link>
           </Loader>
         </div>
         <div>
@@ -99,9 +98,9 @@ export default function Compare(props: CompareProps) {
             Select the second class
           </Select>
           <Loader isLoading={loadingTarget} error={errorTarget}>
-            <Text type="h2" className="text-right">
-              {nameTarget}
-            </Text>
+            <Link href={'/builds/' + targetId} className="text-right">
+              <Text type="h2">{nameTarget}</Text>
+            </Link>
           </Loader>
         </div>
       </div>
@@ -134,15 +133,13 @@ export default function Compare(props: CompareProps) {
         />
         <CompareItem source={dataSource?.stuff.belt.name} target={dataTarget?.stuff.belt.name} />
       </div>
-      <div className="grid grid-cols-2">
-        <div>
-          <Text type="h3">Nb Commun</Text>
-          <Text className={nbDiff <= 8 ? 'text-green-400' : ''}>{13 - nbDiff}</Text>
-        </div>
-        <div>
-          <Text type="h3">Nb Diff</Text>
-          <Text>{nbDiff}</Text>
-        </div>
+      <div
+        className={
+          'grid grid-cols-2 transition-colors ' + (nbDiff <= 8 ? 'text-green-400' : 'text-red-400')
+        }
+      >
+        <Text type="h3">Stuff Commun: {13 - nbDiff}</Text>
+        <Text type="h3">Stuff Différent: {nbDiff}</Text>
       </div>
     </>
   )

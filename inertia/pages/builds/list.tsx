@@ -2,8 +2,7 @@ import type { InferPageProps } from '@adonisjs/inertia/types'
 import { Head } from '@inertiajs/react'
 import { Link } from '~/components/elements/link'
 import { Text } from '~/components/elements/text'
-import { formatName } from '~/scripts/build_name'
-import { useEffect, useState } from 'react'
+import { useBuildName } from '~/hooks/use_build_name_hooks'
 
 import type BuildsListController from '#controllers/builds/builds_list_controller'
 import type BuildsPresenter from '#presenters/builds_presenter'
@@ -11,11 +10,7 @@ import type BuildsPresenter from '#presenters/builds_presenter'
 type ListProps = InferPageProps<BuildsListController, 'handle'>
 
 function BuildName(build: BuildsPresenter) {
-  const [name, setName] = useState('')
-
-  useEffect(() => {
-    setName(formatName(build))
-  }, [build])
+  const name = useBuildName(build)
 
   return (
     <li>
