@@ -5,7 +5,7 @@ import { Text } from '~/components/elements/text'
 import { useBuildName } from '~/hooks/use_build_name_hooks'
 
 import type BuildsListController from '#controllers/builds/builds_list_controller'
-import type BuildsPresenter from '#presenters/builds_presenter'
+import type { BuildsPresenter } from '#repositories/builds_repository'
 
 type ListProps = InferPageProps<BuildsListController, 'handle'>
 

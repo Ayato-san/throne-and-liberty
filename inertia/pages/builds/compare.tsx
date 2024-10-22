@@ -12,7 +12,7 @@ import { addQueryParams, removeQueryParams } from '~/scripts/window'
 import { useEffect, useState } from 'react'
 
 import type BuildsCompareController from '#controllers/builds/builds_compare_controller'
-import type BuildPresenter from '#presenters/build_presenter'
+import type { BuildPresenter } from '#repositories/builds_repository'
 
 type CompareProps = InferPageProps<BuildsCompareController, 'handle'>
 

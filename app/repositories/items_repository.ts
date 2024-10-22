@@ -172,9 +172,6 @@ export class ItemPresenter {
 }
 
 function locationPresenter(location: any): Location | null {
-  if (location === null) {
-    return null
-  }
-
+  if (location === null) return null
   return { name: location.category.name + ' - ' + location.name }
 }

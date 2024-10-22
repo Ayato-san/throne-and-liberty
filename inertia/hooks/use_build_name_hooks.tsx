@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import type BuildPresenter from '#presenters/build_presenter'
-import type BuildsPresenter from '#presenters/builds_presenter'
+import type { BuildPresenter, BuildsPresenter } from '#repositories/builds_repository'
 
 export function useBuildName(build: BuildPresenter | BuildsPresenter | undefined) {
   const [name, setName] = useState('')
