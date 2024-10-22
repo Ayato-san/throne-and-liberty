@@ -1,11 +1,12 @@
 import type { InferPageProps } from '@adonisjs/inertia/types'
 import { Head } from '@inertiajs/react'
-import { ArrowCompare, LeftCompare, RightCompare } from '~/components/comparaison'
+import { CompareDoubleItem, CompareItem } from '~/components/comparaison'
 import { Loader } from '~/components/elements/loader'
 import { Text } from '~/components/elements/text'
 import type { Item } from '~/components/form/select'
 import Select from '~/components/form/select'
 import { useFetch } from '~/hooks/use_fetch_hooks'
+import { formatName } from '~/scripts/build_name'
 import { addQueryParams, removeQueryParams } from '~/scripts/window'
 import { useEffect, useState } from 'react'
 
@@ -14,100 +15,13 @@ import type BuildPresenter from '#presenters/build_presenter'
 
 type CompareProps = InferPageProps<BuildsCompareController, 'handle'>
 
-type CompareItemProps = { source?: string; target?: string }
-type CompareItemDoubleProps = CompareItemProps & { source2?: string; target2?: string }
-
-function CompareItem({ source, target }: CompareItemProps) {
-  if (source === target) {
-    return (
-      <>
-        <LeftCompare classes="equals">{source}</LeftCompare>
-        <RightCompare classes="blank" />
-      </>
-    )
-  }
-  return (
-    <>
-      <LeftCompare>{source}</LeftCompare>
-      <ArrowCompare />
-      <RightCompare>{target}</RightCompare>
-    </>
-  )
-}
-
-function CompareItemDouble({ source, source2, target, target2 }: CompareItemDoubleProps) {
-  if ((source === target && source2 === target2) || (source === target2 && source2 === target)) {
-    return (
-      <>
-        <LeftCompare classes="equals">{source}</LeftCompare>
-        <RightCompare classes="blank" />
-        <LeftCompare classes="equals">{source2}</LeftCompare>
-        <RightCompare classes="blank" />
-      </>
-    )
-  }
-  if (source === target) {
-    return (
-      <>
-        <LeftCompare classes="equals">{source}</LeftCompare>
-        <RightCompare classes="blank" />
-        <LeftCompare>{source2}</LeftCompare>
-        <ArrowCompare />
-        <RightCompare>{target2}</RightCompare>
-      </>
-    )
-  }
-  if (source === target2) {
-    return (
-      <>
-        <LeftCompare classes="equals">{source}</LeftCompare>
-        <RightCompare classes="blank" />
-        <LeftCompare>{source2}</LeftCompare>
-        <ArrowCompare />
-        <RightCompare>{target}</RightCompare>
-      </>
-    )
-  }
-  if (source2 === target) {
-    return (
-      <>
-        <LeftCompare>{source}</LeftCompare>
-        <ArrowCompare />
-        <RightCompare>{target2}</RightCompare>
-        <LeftCompare classes="equals">{source2}</LeftCompare>
-        <RightCompare classes="blank" />
-      </>
-    )
-  }
-  if (source2 === target2) {
-    return (
-      <>
-        <LeftCompare>{source}</LeftCompare>
-        <ArrowCompare />
-        <RightCompare>{target}</RightCompare>
-        <LeftCompare classes="equals">{source2}</LeftCompare>
-        <RightCompare classes="blank" />
-      </>
-    )
-  }
-
-  return (
-    <>
-      <LeftCompare>{source}</LeftCompare>
-      <ArrowCompare />
-      <RightCompare>{target}</RightCompare>
-      <LeftCompare>{source2}</LeftCompare>
-      <ArrowCompare />
-      <RightCompare>{target2}</RightCompare>
-    </>
-  )
-}
-
 export default function Compare(props: CompareProps) {
   const { source, target, builds } = props
 
   const [sourceId, setSourceId] = useState(source)
   const [targetId, setTargetId] = useState(target)
+
+  const [nbDiff, setNbDiff] = useState(0)
 
   const {
     data: dataSource,
@@ -115,46 +29,41 @@ export default function Compare(props: CompareProps) {
     error: errorSource,
   } = useFetch<BuildPresenter>('/builds/' + sourceId)
 
-  const [nameSource, setNameSource] = useState('')
-
-  useEffect(() => {
-    if (dataSource) {
-      let name = dataSource.class || ''
-      if (dataSource.scale) name += ' - ' + dataSource.scale + ' Scale '
-      name += dataSource.type
-      setNameSource(name)
-      addQueryParams('source', dataSource.id)
-    } else {
-      setNameSource('')
-      removeQueryParams('source')
-    }
-  }, [dataSource])
-
   const {
     data: dataTarget,
     loading: loadingTarget,
     error: errorTarget,
   } = useFetch<BuildPresenter>('/builds/' + targetId)
 
+  const [nameSource, setNameSource] = useState('')
+
+  useEffect(() => {
+    if (dataSource) {
+      setNameSource(formatName(dataSource))
+      addQueryParams('source', dataSource.id)
+      setNbDiff(NbDiff(dataSource?.stuff, dataTarget?.stuff))
+    } else {
+      setNameSource('')
+      removeQueryParams('source')
+      setNbDiff(0)
+    }
+  }, [dataSource])
+
   const [nameTarget, setNameTarget] = useState('')
 
   const buildList: Item[] = builds.map((data) => {
-    let label = data.class || ''
-    if (data.scale) label += ' - ' + data.scale + ' Scale '
-    label += data.type
-    return { value: data.id, label }
+    return { value: data.id, label: formatName(data) }
   })
 
   useEffect(() => {
     if (dataTarget) {
-      let name = dataTarget.class || ''
-      if (dataTarget.scale) name += ' - ' + dataTarget.scale + ' Scale '
-      name += dataTarget.type
-      setNameTarget(name)
+      setNameTarget(formatName(dataTarget))
       addQueryParams('target', dataTarget.id)
+      setNbDiff(NbDiff(dataSource?.stuff, dataTarget?.stuff))
     } else {
       setNameTarget('')
       removeQueryParams('target')
+      setNbDiff(0)
     }
   }, [dataTarget])
 
@@ -197,7 +106,7 @@ export default function Compare(props: CompareProps) {
         </div>
       </div>
       <div className="grid grid-cols-6 items-center">
-        <CompareItemDouble
+        <CompareDoubleItem
           source={dataSource?.stuff.primaryWeapon.name}
           source2={dataSource?.stuff.secondaryWeapon.name}
           target={dataTarget?.stuff.primaryWeapon.name}
@@ -217,7 +126,7 @@ export default function Compare(props: CompareProps) {
           source={dataSource?.stuff.bracelet.name}
           target={dataTarget?.stuff.bracelet.name}
         />
-        <CompareItemDouble
+        <CompareDoubleItem
           source={dataSource?.stuff.primaryRing.name}
           source2={dataSource?.stuff.secondaryRing.name}
           target={dataTarget?.stuff.primaryRing.name}
@@ -225,6 +134,48 @@ export default function Compare(props: CompareProps) {
         />
         <CompareItem source={dataSource?.stuff.belt.name} target={dataTarget?.stuff.belt.name} />
       </div>
+      <div className="grid grid-cols-2">
+        <div>
+          <Text type="h3">Nb Commun</Text>
+          <Text className={nbDiff <= 8 ? 'text-green-400' : ''}>{13 - nbDiff}</Text>
+        </div>
+        <div>
+          <Text type="h3">Nb Diff</Text>
+          <Text>{nbDiff}</Text>
+        </div>
+      </div>
     </>
   )
+}
+
+type KeyStuff = keyof BuildPresenter['stuff']
+
+function NbDiff(source?: BuildPresenter['stuff'], target?: BuildPresenter['stuff']) {
+  if (!source || !target) {
+    return 0
+  }
+
+  const keys = Object.keys(source) as KeyStuff[]
+
+  return keys.reduce((acc, key) => {
+    const sourceName = source[key].name
+    const targetName = target[key].name
+
+    if (sourceName !== targetName) {
+      if (key.startsWith('primary')) {
+        const secondaryKey = key.replace('primary', 'secondary') as KeyStuff
+        if (sourceName !== target[secondaryKey]?.name) {
+          return acc + 1
+        }
+      } else if (key.startsWith('secondary')) {
+        const primaryKey = key.replace('secondary', 'primary') as KeyStuff
+        if (sourceName !== target[primaryKey]?.name) {
+          return acc + 1
+        }
+      } else {
+        return acc + 1
+      }
+    }
+    return acc
+  }, 0)
 }

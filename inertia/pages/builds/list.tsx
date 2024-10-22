@@ -2,6 +2,7 @@ import type { InferPageProps } from '@adonisjs/inertia/types'
 import { Head } from '@inertiajs/react'
 import { Link } from '~/components/elements/link'
 import { Text } from '~/components/elements/text'
+import { formatName } from '~/scripts/build_name'
 import { useEffect, useState } from 'react'
 
 import type BuildsListController from '#controllers/builds/builds_list_controller'
@@ -13,10 +14,7 @@ function BuildName(build: BuildsPresenter) {
   const [name, setName] = useState('')
 
   useEffect(() => {
-    let name = build.class || ''
-    if (build.scale) name += ' - ' + build.scale + ' Scale '
-    name += build.type
-    setName(name)
+    setName(formatName(build))
   }, [build])
 
   return (
